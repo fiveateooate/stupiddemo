@@ -7,4 +7,5 @@ Requires=flanneld.service
 TimeoutStartSec=0
 ExecStartPre=/usr/bin/docker pull fiveateooate/somenginx:hulk
 ExecStart=/usr/bin/docker run --name hulk fiveateooate/somenginx:hulk
+ExecPostStart=/bin/sh -c "echo bob"
 ExecStop=/usr/bin/docker stop --rm hulk
