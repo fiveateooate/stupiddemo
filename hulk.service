@@ -4,8 +4,9 @@ After=flanneld.service
 Requires=flanneld.service
 
 [Service]
+User=core
 TimeoutStartSec=0
 ExecStartPre=/usr/bin/docker pull fiveateooate/somenginx:hulk
-ExecStart=/usr/bin/docker run --name hulk fiveateooate/somenginx:hulk
-ExecPostStart=/bin/sh -c "echo bob"
-ExecStop=/usr/bin/docker stop --rm hulk
+ExecStart=/usr/bin/docker run --rm --name hulk fiveateooate/somenginx:hulk
+ExecStartPost=/bin/sh -c "sleep 5;IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' hulk`;/usr/bin/etcdctl set /nginx/paths/hulk $IP"
+ExecStop=/usr/bin/docker stop hulk
