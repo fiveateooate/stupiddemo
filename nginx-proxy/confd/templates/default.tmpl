@@ -1,3 +1,9 @@
+{{range gets "/nginx/paths/*"}}
+upstream {{base .Key}}  {
+      server {{.Value}};
+}
+{{end}}
+
 server {
     listen       80;
 
@@ -21,7 +27,13 @@ server {
     #
     {{range gets "/nginx/paths/*"}}
     location ~ /{{base .Key}}$ {
-        proxy_pass   http://{{.Value}};
+        proxy_pass   http://{{base .Key}};
+        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        proxy_redirect off;
+        proxy_buffering off;
+        proxy_set_header        Host            $host;
+        proxy_set_header        X-Real-IP       $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
     }
     {{end}}
 
