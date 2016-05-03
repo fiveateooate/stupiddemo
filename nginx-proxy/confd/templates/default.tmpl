@@ -19,9 +19,9 @@ server {
 
     # proxy the PHP scripts to Apache listening on 127.0.0.1:80
     #
-    {{range gets /nginx/paths/}}{{$data := json .Value}} 
-    location ~ /{{$data.path}}$ {
-        proxy_pass   http://{{$data.ip}};
+    {{range gets "/nginx/paths/*"}}
+    location ~ /{{base .Key}}$ {
+        proxy_pass   http://{{.Value}};
     }
     {{end}}
 
