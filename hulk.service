@@ -1,0 +1,10 @@
+[Unit]
+Description=hulk
+After=flanneld.service
+Requires=flanneld.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=/usr/bin/docker pull fiveateooate/somenginx:hulk
+ExecStart=/usr/bin/docker run --name hulk fiveateooate/somenginx:hulk
+ExecStop=/usr/bin/docker stop --rm hulk

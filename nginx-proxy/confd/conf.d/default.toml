@@ -1,0 +1,7 @@
+[template]
+src = "default.tmpl"
+dest = "/etc/nginx/sites-available/default"
+keys = [
+    "/nginx/paths/",
+]
+reload_cmd = "supervisorctl restart nginx"
