@@ -8,5 +8,5 @@ User=core
 EnvironmentFile=/etc/environment
 TimeoutStartSec=0
 ExecStartPre=/usr/bin/docker pull fiveateooate/somenginx:proxy
-ExecStart=/usr/bin/docker run --rm --name proxy -e ETC_HOST=$(COREOS_PRIVATE_IPV4):2379 fiveateooate/somenginx:proxy
+ExecStart=/usr/bin/docker run --rm --name proxy -e ETCD_HOST=${COREOS_PRIVATE_IPV4}:2379 fiveateooate/somenginx:proxy
 ExecStop=/usr/bin/docker stop proxy
